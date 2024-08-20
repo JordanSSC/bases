@@ -18,7 +18,6 @@ class TaskList(ctk.CTk):
         self.title("Tareas")
         self._state_before_windows_set_titlebar_color = 'zoomed'
         
-
         self.frame = ctk.CTkFrame(self, corner_radius=0)
         self.frame.pack(pady=0, padx=0, fill="both", expand=True)
 
@@ -29,11 +28,11 @@ class TaskList(ctk.CTk):
         self.label_tareas.pack(side="left", padx=20)
 
         self.imagen_regresar_tk = ctk.CTkImage(light_image=Image.open("imagenes/regresar.png"), size=(60, 60))
-        self.icono_regresar = ctk.CTkButton(self.top_frame, image=self.imagen_regresar_tk, text="", width=60, height=60, command=self.regresar_menu_principal)
+        self.icono_regresar = ctk.CTkButton(self.top_frame, image=self.imagen_regresar_tk, text="", fg_color='transparent',width=60, height=60, command=self.regresar_menu_principal)
         self.icono_regresar.pack(side="right", padx=10)
 
         self.imagen_agregar_tk = ctk.CTkImage(light_image=Image.open("imagenes/agregar.png"), size=(60, 60))
-        self.boton_agregar = ctk.CTkButton(self.top_frame, image=self.imagen_agregar_tk, text="", width=60, height=60, command=self.abrir_ventana_agregar)
+        self.boton_agregar = ctk.CTkButton(self.top_frame, image=self.imagen_agregar_tk, text="",fg_color='transparent', width=60, height=60, command=self.abrir_ventana_agregar)
         self.boton_agregar.pack(side="right", padx=10)
 
         self.frame_tareas = ctk.CTkFrame(self.frame, corner_radius=0)
@@ -65,7 +64,7 @@ class TaskList(ctk.CTk):
             descripcion_label.pack(side="top", anchor="w", pady=5, padx=5)
 
             eliminar_tk = ctk.CTkImage(light_image=Image.open("imagenes/basura.png"), size=(30, 30))
-            boton_eliminar = ctk.CTkButton(tarea_frame, image=eliminar_tk, text="", width=30, height=30, command=lambda t=tarea: self.confirmar_eliminar(t))
+            boton_eliminar = ctk.CTkButton(tarea_frame, image=eliminar_tk, text="", width=30,fg_color='transparent', height=30, command=lambda t=tarea: self.confirmar_eliminar(t))
             boton_eliminar.pack(side="right", padx=10)
 
             tarea_frame.bind("<Button-1>", lambda e, t=tarea: self.abrir_ventana_tarea(t))
@@ -128,7 +127,7 @@ class VentanaTarea(ctk.CTkFrame):
         label_tarea = ctk.CTkLabel(top_frame_tarea, text=self.tarea.nombre, font=("Arial", 36))
         label_tarea.pack(side="left", padx=20)
 
-        icono_regresar = ctk.CTkButton(top_frame_tarea, image=self.master.imagen_regresar_tk, text="", width=60, height=60, command=self.toplevel.destroy)
+        icono_regresar = ctk.CTkButton(top_frame_tarea, image=self.master.imagen_regresar_tk,fg_color='transparent', text="", width=60, height=60, command=self.toplevel.destroy)
         icono_regresar.pack(side="right", padx=10)
 
         descripcion_label = ctk.CTkLabel(self, text=f"Descripción: {self.tarea.descripcion}", font=("Arial", 18))
@@ -168,7 +167,7 @@ class VentanaAgregar(ctk.CTkFrame):
         label_agregar = ctk.CTkLabel(top_frame_agregar, text="AGREGAR TAREA", font=("Arial", 36))
         label_agregar.pack(side="left", padx=20)
 
-        icono_regresar = ctk.CTkButton(top_frame_agregar, image=self.master.imagen_regresar_tk, text="", width=60, height=60, command=self.toplevel.destroy)
+        icono_regresar = ctk.CTkButton(top_frame_agregar, image=self.master.imagen_regresar_tk, fg_color='transparent',text="", width=60, height=60, command=self.toplevel.destroy)
         icono_regresar.pack(side="right", padx=10)
 
         # Campos de entrada para el nombre y descripción de la tarea
