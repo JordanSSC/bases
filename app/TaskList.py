@@ -1,7 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk
+from tkcalendar import Calendar
 from PIL import Image
-
+from packages.models.src.task import Task
 # Clase placeholder para representar una tarea
 class Tarea:
     def __init__(self, nombre, descripcion, subtareas=None):
@@ -74,7 +75,7 @@ class TaskList(ctk.CTk):
     def abrir_ventana_agregar(self):
         VentanaAgregar(self)
 
-class ConfirmarEliminacion(ctk.CTkFrame):
+class DeleteTaskPage(ctk.CTkFrame):
     def __init__(self, master, tarea):
         self.toplevel = tk.Toplevel(master)
         super().__init__(self.toplevel)
@@ -171,7 +172,7 @@ class VentanaAgregar(ctk.CTkFrame):
         icono_regresar.pack(side="right", padx=10)
 
         # Campos de entrada para el nombre y descripción de la tarea
-        nombre_label = ctk.CTkLabel(self, text="Nombre de la Tarea:", font=("Arial", 18))
+        nombre_label = ctk.CTkLabel(self, text="Título de la Tarea:", font=("Arial", 18))
         nombre_label.pack(pady=10, padx=20, anchor="w")
         self.nombre_entry = ctk.CTkEntry(self, font=("Arial", 16))
         self.nombre_entry.pack(pady=10, padx=20, fill="x")
@@ -180,6 +181,29 @@ class VentanaAgregar(ctk.CTkFrame):
         descripcion_label.pack(pady=10, padx=20, anchor="w")
         self.descripcion_entry = ctk.CTkEntry(self, font=("Arial", 16))
         self.descripcion_entry.pack(pady=10, padx=20, fill="x")
+
+        cal = Calendar(self, selectmode = 'day',
+               year = 2020, month = 5,
+               day = 22)
+        cal.pack(pady = 20)
+
+        dueDate_label = ctk.CTkLabel(self, text="Fecha de Vencimiento:" , font=("Arial", 18))
+        dueDate_label.pack(pady=10, padx=20, anchor="w")
+        cal = Calendar(self, selectmode = 'day',
+               year = 2020, month = 5,
+               day = 22)
+        cal.pack(pady = 20)
+
+        estado_label = ctk.CTkLabel(self, text="Estado Actual de la Tarea:", font=("Arial", 18))
+        estado_label.pack(pady=10, padx=20, anchor="w")
+        self.descripcion_entry = ctk.CTkEntry(self, font=("Arial", 16))
+        self.descripcion_entry.pack(pady=10, padx=20, fill="x")
+
+        nombre_label = ctk.CTkLabel(self, text="Prioridad Actual de la Tarea:", font=("Arial", 18))
+        nombre_label.pack(pady=10, padx=20, anchor="w")
+        self.nombre_entry = ctk.CTkEntry(self, font=("Arial", 16))
+        self.nombre_entry.pack(pady=10, padx=20, fill="x")
+
 
         # Botones de confirmar y cancelar
         boton_confirmar = ctk.CTkButton(self, text="Confirmar", font=("Arial", 16), command=self.confirmar)
@@ -191,10 +215,31 @@ class VentanaAgregar(ctk.CTkFrame):
     def confirmar(self):
         nombre = self.nombre_entry.get()
         descripcion = self.descripcion_entry.get()
-        nueva_tarea = Tarea(nombre, descripcion)
+        dueDate = self.cal.get_date()
+
+        nueva_tarea = Task(nombre, descripcion)
         tareas.append(nueva_tarea)
         self.master.actualizar_tareas()
         self.toplevel.destroy()
+
+class EditTask(ctk.CTkFrame):
+    def __init__(self,master,tarea):
+        self.toplevel = tk.Toplevel(master)
+        super().__init__(self.toplevel)
+        self.master = master
+        self.build()
+    def build(self):
+        self.toplevel.title("Editar Tarea")
+        self.toplevel.state('zoomed')
+        top_frame_editar = ctk.CTkFrame(self, corner_radius=0)
+        top_frame_editar.pack(side="top", fill="x", pady=20)
+
+        label_editar = ctk.CTkLabel(top_frame_editar, text="Editar los parámetros de la tarea", font=("Times New Roman", 36))
+        label_editar.pack(side="left", padx=20)
+        icono_regresar = ctk.CTkButton(top_frame_editar, image=self.master.imagen_regresar_tk, fg_color='transparent',text="", width=60, height=60, command=self.toplevel.destroy)
+        icono_regresar.pack(side="right", padx=10)
+
+
 
 # Lista de tareas para probar
 tareas = [

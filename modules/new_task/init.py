@@ -1,0 +1,1 @@
+from .view.new_task_page import NewTaskPage

@@ -1,0 +1,1 @@
+from .view.delete_task_page import DeleteTaskPage
